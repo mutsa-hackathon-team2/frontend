@@ -1,5 +1,4 @@
 import { Route, Routes } from "react-router";
-import Header from "./components/Header.jsx";
 import Detail from "./pages/DetailPage.jsx";
 import Main from "./pages/MainPage.jsx";
 
