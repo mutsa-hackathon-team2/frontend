@@ -5,6 +5,7 @@ import Chip from "../components/Chip.jsx";
 import ListCard from "../components/ListCard.jsx";
 import plusIcon from "../assets/icons/plus.svg";
 import { getEvents } from "../apis/eventApi.js";
+import { handleKakaoLogin } from "../utils/kakaoLogin.js";
 
 const categories = ["전체", "전시", "공연", "행사", "무료"];
 
@@ -47,6 +48,17 @@ function Main() {
   const [isLoading, setIsLoading] = useState(true);
   const [errorMessage, setErrorMessage] = useState("");
   const [requestKey, setRequestKey] = useState(0);
+
+  const handleAddEvent = () => {
+    const loginMemberId = sessionStorage.getItem("loginMemberId");
+
+    if (loginMemberId) {
+      navigate("/register");
+      return;
+    }
+
+    handleKakaoLogin();
+  };
 
   useEffect(() => {
     const controller = new AbortController();
@@ -130,7 +142,7 @@ function Main() {
               as="button"
               type="button"
               className="bg-[#4357AE]"
-              onClick={() => navigate("/register")}
+              onClick={handleAddEvent}
             >
               <img src={plusIcon} className="size-6" />
               <span className="text-white">추가하기</span>
