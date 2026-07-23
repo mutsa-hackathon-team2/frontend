@@ -1,8 +1,7 @@
-import defaultCardImage from "../assets/images/img.png";
 import SubChip from "./SubChip.jsx";
 
 function ListCard({
-  imageSrc = defaultCardImage,
+  imageSrc,
   category,
   dDay,
   date,
