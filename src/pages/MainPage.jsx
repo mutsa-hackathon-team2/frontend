@@ -64,7 +64,7 @@ function Main() {
         <section className="flex flex-col gap-10">
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div className="flex flex-wrap items-center gap-4">
-              <Chip className="bg-[#E7EBFF]">전체</Chip>
+              <Chip className="bg-[#F1F1F1]">전체</Chip>
               <Chip className="bg-[#F1F1F1]">전시</Chip>
               <Chip className="bg-[#F1F1F1]">공연</Chip>
               <Chip className="bg-[#F1F1F1]">행사</Chip>
