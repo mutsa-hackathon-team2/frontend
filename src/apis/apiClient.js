@@ -11,9 +11,6 @@ if (!apiBaseUrl) {
 function clearAuthTokens() {
   localStorage.removeItem("accessToken");
   localStorage.removeItem("refreshToken");
-  sessionStorage.removeItem("accessToken");
-  sessionStorage.removeItem("refreshToken");
-  sessionStorage.removeItem("loginMemberId");
 }
 
 const apiClient = axios.create({
