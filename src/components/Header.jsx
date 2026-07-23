@@ -1,11 +1,12 @@
 import { Link } from "react-router";
 import profileIcon from "../assets/icons/profile.svg";
+import logoIcon from "../assets/icons/logo.svg";
 
 function Header() {
   return (
     <header className="flex w-full items-center justify-between px-12 py-5 bg-[#F1F1F1] rounded-100">
-      <Link to="/" className="flex h-12 items-center text-heading">
-        logo
+      <Link to="/" className="flex items-center">
+        <img src={logoIcon} alt="" className="h-6 w-26" />
       </Link>
 
       <button

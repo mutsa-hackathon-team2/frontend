@@ -64,14 +64,17 @@ function Main() {
         <section className="flex flex-col gap-10">
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div className="flex flex-wrap items-center gap-4">
-              <Chip className="bg-[#E7EBFF]">전체</Chip>
+              <Chip className="bg-[#F1F1F1]">전체</Chip>
               <Chip className="bg-[#F1F1F1]">전시</Chip>
               <Chip className="bg-[#F1F1F1]">공연</Chip>
               <Chip className="bg-[#F1F1F1]">행사</Chip>
               <Chip className="bg-[#F1F1F1]">무료</Chip>
             </div>
 
-            <Chip className="bg-[#4357AE]">
+            <Chip
+              className="bg-[#4357AE]"
+              onClick={() => navigate("/register")}
+            >
               <img src={plusIcon} className="size-6" />
               <span className="text-white">추가하기</span>
             </Chip>
