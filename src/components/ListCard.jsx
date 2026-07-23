@@ -51,9 +51,9 @@ function ListCard({
           </span>
         </div>
 
-        <div>
+        <div className="w-full">
           <p className="mb-0 text-subtitle2 text-[#69788A]">{date}</p>
-          <h2 className="text-title text-[#171E29]">{title}</h2>
+          <h2 className="w-full truncate text-title text-[#171E29]">{title}</h2>
         </div>
       </div>
     </article>
