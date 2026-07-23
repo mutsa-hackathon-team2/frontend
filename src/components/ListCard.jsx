@@ -1,4 +1,5 @@
 import defaultCardImage from "../assets/images/img.png";
+import SubChip from "./SubChip.jsx";
 
 function ListCard({
   imageSrc = defaultCardImage,
@@ -43,12 +44,12 @@ function ListCard({
 
       <div className="z-10 flex w-full flex-1 flex-col items-start justify-end gap-5 px-10 py-8">
         <div className="flex items-center gap-2">
-          <span className="rounded-100 bg-[#455DBA] px-4 py-1 text-body3 text-white">
+          <SubChip className="bg-[#455DBA] text-white">
             {category}
-          </span>
-          <span className="rounded-100 bg-[#455DBA] px-4 py-1 text-body3 text-white">
+          </SubChip>
+          <SubChip className="bg-[#455DBA] text-white">
             {dDay}
-          </span>
+          </SubChip>
         </div>
 
         <div className="w-full">
