@@ -1,57 +1,97 @@
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router";
 import Header from "../components/Header.jsx";
 import Chip from "../components/Chip.jsx";
 import ListCard from "../components/ListCard.jsx";
 import plusIcon from "../assets/icons/plus.svg";
+import { getEvents } from "../apis/eventApi.js";
 
-// mockdata
-const cardList = [
-  {
-    id: 1,
-    category: "공연",
-    dDay: "D-4",
-    date: "8. 10 ~ 8. 12",
-    title: "데일리파티 여름 버스킹",
-  },
-  {
-    id: 2,
-    category: "전시",
-    dDay: "D-4",
-    date: "8. 10 ~ 8. 12",
-    title: "홍익대학교 시각디자인 졸업전시",
-  },
-  {
-    id: 3,
-    category: "행사",
-    dDay: "D-4",
-    date: "8. 10 ~ 8. 12",
-    title: "한양대학교 축제",
-  },
-  {
-    id: 4,
-    category: "전시",
-    dDay: "D-8",
-    date: "8. 14 ~ 8. 18",
-    title: "디자인 졸업 작품전",
-  },
-  {
-    id: 5,
-    category: "공연",
-    dDay: "D-10",
-    date: "8. 16 ~ 8. 17",
-    title: "한여름 밤의 음악회",
-  },
-  {
-    id: 6,
-    category: "무료",
-    dDay: "D-12",
-    date: "8. 18 ~ 8. 20",
-    title: "모두를 위한 문화 체험",
-  },
-];
+const categories = ["전체", "전시", "공연", "행사", "무료"];
+
+function formatDDay(value) {
+  if (value === null || value === undefined) {
+    return "";
+  }
+
+  const days = Number(value);
+
+  if (Number.isNaN(days)) {
+    return String(value);
+  }
+
+  if (days === 0) {
+    return "D-Day";
+  }
+
+  return days > 0 ? `D-${days}` : `D+${Math.abs(days)}`;
+}
+
+function formatPrice(value) {
+  if (value === null || value === undefined) {
+    return "가격 정보 없음";
+  }
+
+  const price = Number(value);
+
+  if (Number.isNaN(price)) {
+    return String(value);
+  }
+
+  return price === 0 ? "무료" : `${price.toLocaleString("ko-KR")}원`;
+}
 
 function Main() {
   const navigate = useNavigate();
+  const [events, setEvents] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState("전체");
+  const [isLoading, setIsLoading] = useState(true);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [requestKey, setRequestKey] = useState(0);
+
+  useEffect(() => {
+    const controller = new AbortController();
+
+    async function loadEvents() {
+      setIsLoading(true);
+      setErrorMessage("");
+
+      try {
+        const eventList = await getEvents({ signal: controller.signal });
+        setEvents(eventList);
+      } catch (error) {
+        if (error.code !== "ERR_CANCELED") {
+          setErrorMessage(
+            error.message || "행사 목록을 불러오는 중 문제가 발생했습니다.",
+          );
+        }
+      } finally {
+        if (!controller.signal.aborted) {
+          setIsLoading(false);
+        }
+      }
+    }
+
+    loadEvents();
+
+    return () => controller.abort();
+  }, [requestKey]);
+
+  const filteredEvents = useMemo(() => {
+    if (selectedCategory === "전체") {
+      return events;
+    }
+
+    if (selectedCategory === "무료") {
+      return events.filter(
+        (event) =>
+          event.categoryName === selectedCategory || Number(event.price) === 0,
+      );
+    }
+
+    return events.filter(
+      (event) => event.categoryName === selectedCategory,
+    );
+  }, [events, selectedCategory]);
 
   return (
     <div className="min-h-screen bg-white flex flex-col items-center">
@@ -64,14 +104,31 @@ function Main() {
         <section className="flex flex-col gap-10">
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div className="flex flex-wrap items-center gap-4">
-              <Chip className="bg-[#F1F1F1]">전체</Chip>
-              <Chip className="bg-[#F1F1F1]">전시</Chip>
-              <Chip className="bg-[#F1F1F1]">공연</Chip>
-              <Chip className="bg-[#F1F1F1]">행사</Chip>
-              <Chip className="bg-[#F1F1F1]">무료</Chip>
+              {categories.map((category) => {
+                const isSelected = selectedCategory === category;
+
+                return (
+                  <Chip
+                    key={category}
+                    as="button"
+                    type="button"
+                    aria-pressed={isSelected}
+                    className={
+                      isSelected
+                        ? "bg-[#4357AE] text-white"
+                        : "bg-[#F1F1F1]"
+                    }
+                    onClick={() => setSelectedCategory(category)}
+                  >
+                    {category}
+                  </Chip>
+                );
+              })}
             </div>
 
             <Chip
+              as="button"
+              type="button"
               className="bg-[#4357AE]"
               onClick={() => navigate("/register")}
             >
@@ -80,18 +137,46 @@ function Main() {
             </Chip>
           </div>
 
-          <div className="grid w-full grid-cols-3 justify-items-center gap-5">
-            {cardList.map((card) => (
-              <ListCard
-                key={card.id}
-                category={card.category}
-                dDay={card.dDay}
-                date={card.date}
-                title={card.title}
-                onClick={() => navigate("/detail")}
-              />
-            ))}
-          </div>
+          {isLoading && (
+            <p className="py-20 text-center text-body1 text-[#69788A]" role="status">
+              행사 목록을 불러오고 있어요.
+            </p>
+          )}
+
+          {!isLoading && errorMessage && (
+            <div className="flex flex-col items-center gap-4 py-20">
+              <p className="text-body1 text-[#69788A]">{errorMessage}</p>
+              <button
+                type="button"
+                className="rounded-100 bg-[#4357AE] px-7 py-2 text-body2 text-white"
+                onClick={() => setRequestKey((key) => key + 1)}
+              >
+                다시 시도
+              </button>
+            </div>
+          )}
+
+          {!isLoading && !errorMessage && filteredEvents.length === 0 && (
+            <p className="py-20 text-center text-body1 text-[#69788A]">
+              등록된 행사가 없어요.
+            </p>
+          )}
+
+          {!isLoading && !errorMessage && filteredEvents.length > 0 && (
+            <div className="grid w-full grid-cols-3 justify-items-center gap-5">
+              {filteredEvents.map((event) => (
+                <ListCard
+                  key={event.id}
+                  imageSrc={event.posterUrl || undefined}
+                  category={event.categoryName}
+                  dDay={formatDDay(event.dday ?? event.dDay)}
+                  price={formatPrice(event.price)}
+                  title={event.title}
+                  onClick={() => navigate(`/detail/${event.id}`)}
+                />
+              ))}
+            </div>
+          )}
         </section>
       </div>
     </div>
