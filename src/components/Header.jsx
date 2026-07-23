@@ -2,10 +2,11 @@ import { Link } from "react-router";
 import profileIcon from "../assets/icons/profile.svg";
 import { handleKakaoLogin } from "../utils/kakaoLogin";
 import logoIcon from "../assets/icons/logo.svg";
+import useAuth from "../hooks/useAuth.js";
 
 function Header() {
-  const loginMemberId = sessionStorage.getItem("loginMemberId");
-  const isLoggedIn = Boolean(loginMemberId);
+  const { isAuthenticated, isAuthLoading } = useAuth();
+  const isButtonDisabled = isAuthLoading || isAuthenticated;
 
   return (
     <header className="flex w-full items-center justify-between px-12 py-5 bg-[#F1F1F1] rounded-100">
@@ -15,15 +16,19 @@ function Header() {
 
       <button
         type="button"
-        disabled={isLoggedIn}
-        onClick={isLoggedIn ? undefined : handleKakaoLogin}
+        disabled={isButtonDisabled}
+        onClick={isButtonDisabled ? undefined : handleKakaoLogin}
         className={`flex items-center gap-2 rounded-100 border-0 bg-white px-5 py-2 ${
-          isLoggedIn ? "cursor-default" : "cursor-pointer"
+          isButtonDisabled ? "cursor-default" : "cursor-pointer"
         }`}
       >
         <img src={profileIcon} alt="" className="size-6" />
         <span className="text-subtitle2">
-          {isLoggedIn ? "내 계정" : "log in"}
+          {isAuthLoading
+            ? "확인 중..."
+            : isAuthenticated
+              ? "내 계정"
+              : "log in"}
         </span>
       </button>
     </header>

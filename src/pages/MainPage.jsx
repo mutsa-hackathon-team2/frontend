@@ -6,6 +6,7 @@ import ListCard from "../components/ListCard.jsx";
 import plusIcon from "../assets/icons/plus.svg";
 import { getEvents } from "../apis/eventApi.js";
 import { handleKakaoLogin } from "../utils/kakaoLogin.js";
+import useAuth from "../hooks/useAuth.js";
 
 const categories = ["전체", "전시", "공연", "행사", "무료"];
 
@@ -43,6 +44,7 @@ function formatPrice(value) {
 
 function Main() {
   const navigate = useNavigate();
+  const { isAuthenticated, isAuthLoading } = useAuth();
   const [events, setEvents] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("전체");
   const [isLoading, setIsLoading] = useState(true);
@@ -50,9 +52,7 @@ function Main() {
   const [requestKey, setRequestKey] = useState(0);
 
   const handleAddEvent = () => {
-    const loginMemberId = sessionStorage.getItem("loginMemberId");
-
-    if (loginMemberId) {
+    if (isAuthenticated) {
       navigate("/register");
       return;
     }
@@ -141,7 +141,11 @@ function Main() {
             <Chip
               as="button"
               type="button"
-              className="bg-[#4357AE]"
+              disabled={isAuthLoading}
+              aria-busy={isAuthLoading}
+              className={`bg-[#4357AE] ${
+                isAuthLoading ? "cursor-wait opacity-70" : ""
+              }`}
               onClick={handleAddEvent}
             >
               <img src={plusIcon} className="size-6" />
