@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router";
 import Header from "../components/Header.jsx";
 import Chip from "../components/Chip.jsx";
+import ListCard from "../components/ListCard.jsx";
 import profileIcon from "../assets/icons/profile.svg";
 
 function Main() {
@@ -23,6 +24,10 @@ function Main() {
               <img src={profileIcon} className="size-6" />
             </Chip>
           </div>
+        </section>
+
+        <section className="mt-10">
+          <ListCard onClick={() => navigate("/detail")} />
         </section>
 
         <h1 className="text-heading">홈화면~~</h1>
