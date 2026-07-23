@@ -2,10 +2,10 @@ import defaultCardImage from "../assets/images/img.png";
 
 function ListCard({
   imageSrc = defaultCardImage,
-  category = "공연",
-  dDay = "D-4",
-  date = "8. 10 ~ 8. 12",
-  title = "데일리파티 여름 버스킹",
+  category,
+  dDay,
+  date,
+  title,
   onClick,
   className = "",
 }) {
