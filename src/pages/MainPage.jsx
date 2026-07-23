@@ -71,7 +71,10 @@ function Main() {
               <Chip className="bg-[#F1F1F1]">무료</Chip>
             </div>
 
-            <Chip className="bg-[#4357AE]">
+            <Chip
+              className="bg-[#4357AE]"
+              onClick={() => navigate("/register")}
+            >
               <img src={plusIcon} className="size-6" />
               <span className="text-white">추가하기</span>
             </Chip>
