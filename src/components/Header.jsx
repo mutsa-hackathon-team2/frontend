@@ -1,12 +1,13 @@
 import { Link } from "react-router";
 import profileIcon from "../assets/icons/profile.svg";
 import { handleKakaoLogin } from "../utils/kakaoLogin";
+import logoIcon from "../assets/icons/logo.svg";
 
 function Header() {
   return (
     <header className="flex w-full items-center justify-between px-12 py-5 bg-[#F1F1F1] rounded-100">
-      <Link to="/" className="flex items-center text-heading">
-      UniCul
+      <Link to="/" className="flex items-center">
+        <img src={logoIcon} alt="" className="h-6 w-26" />
       </Link>
 
       <button
