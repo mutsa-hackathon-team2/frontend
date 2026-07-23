@@ -25,10 +25,15 @@
   --text-title--font-weight: 700;
   --text-title--letter-spacing: -0.52px;
 
-  --text-subtitle: 16px;
-  --text-subtitle--line-height: 1.5;
-  --text-subtitle--font-weight: 600;
-  --text-subtitle--letter-spacing: -0.32px;
+  --text-subtitle1: 18px;
+  --text-subtitle1--line-height: 1.5;
+  --text-subtitle1--font-weight: 600;
+  --text-subtitle1--letter-spacing: -0.36px;
+
+  --text-subtitle2: 16px;
+  --text-subtitle2--line-height: 1.5;
+  --text-subtitle2--font-weight: 600;
+  --text-subtitle2--letter-spacing: -0.32px;
 
   --text-body1: 18px;
   --text-body1--line-height: 1.5;
@@ -44,10 +49,21 @@
   --text-body3--line-height: 1.5;
   --text-body3--font-weight: 500;
   --text-body3--letter-spacing: -0.28px;
+
+  --radius-100: 100px;
+  --radius-16: 16px;
 }
 
 @layer base {
+  * {
+    box-sizing: border-box;
+  }
+
   html {
     font-family: var(--font-sans);
+  }
+
+  body {
+    margin: 0;
   }
 }
