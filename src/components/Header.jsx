@@ -5,7 +5,7 @@ function Header() {
   return (
     <header className="flex w-full items-center justify-between px-12 py-5 bg-[#F1F1F1] rounded-100">
       <Link to="/" className="flex h-12 items-center text-heading">
-        logo
+        UniCul
       </Link>
 
       <button
