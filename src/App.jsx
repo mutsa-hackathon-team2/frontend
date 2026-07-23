@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router";
-import Main from "./pages/Main.jsx";
-import Detail from "./pages/Detail.jsx";
+import Main from "./pages/MainPage.jsx";
+import Detail from "./pages/DetailPage.jsx";
 
 function App() {
   return (
