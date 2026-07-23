@@ -1,5 +1,12 @@
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router";
 import { mockEvents } from "../data/mockEvents";
+import Chip from "../components/Chip";
+
+const categoryColorMap = {
+  공연: "bg-[#43AE73] text-white",
+  전시: "bg-[#6043AE] text-white",
+  행사: "bg-[#4357AE] text-white",
+};
 
 function Detail() {
   const { id } = useParams();
@@ -26,23 +33,22 @@ function Detail() {
       </button>
 
       <div className="flex flex-col md:flex-row gap-8">
+        {/* 이미지 */}
+        <div className="w-full md:w-80 h-96 bg-gray-200 rounded-lg overflow-hidden shrink-0">
+          {event.imageUrl && (
+            <img src={event.imageUrl} alt={event.title} className="w-full h-full object-cover" />
+          )}
+        </div>
+
+        {/* 상세 정보 */}
       <div className="flex-1 flex flex-col justify-between md:h-96">
-  <div>
-    <span className="inline-block text-body2 bg-pink-100 text-pink-700 px-3 py-1 rounded-full mb-3">
-      {event.category}
-    </span>
-    <h1 className="text-title mb-4">{event.title}</h1>
-    <dl className="space-y-2">
-    </dl>
-  </div>
-  </div>
-        <div className="flex-1">
-          <span className="inline-block text-body2 bg-pink-100 text-pink-700 px-3 py-1 rounded-full mb-3">
+        <div>
+          <Chip className={`mb-3 ${categoryColorMap[event.category] ?? "bg-gray-200 text-gray-700"}`}>
             {event.category}
-          </span>
+          </Chip>
           <h1 className="text-title mb-4">{event.title}</h1>
 
-          <dl className="space-y-2 mb-6">
+          <dl className="space-y-2">
             <div className="flex gap-4">
               <dt className="text-body1 text-gray-500 w-12">장소</dt>
               <dd className="text-body1">{event.place}</dd>
@@ -57,20 +63,28 @@ function Detail() {
             </div>
             <div className="flex gap-4">
               <dt className="text-body1 text-gray-500 w-12">가격</dt>
-              <dd className="text-body1">
-              </dd>
+              <dd className="text-body1">{event.price}</dd>
             </div>
           </dl>
+        </div>
 
-          <button onClick={handleReserve} className="self-end border rounded-full px-5 py-2 text-body1">
-    예매하기 &gt;
+          <button
+            onClick={handleReserve}
+            className="self-end border rounded-full px-5 py-2 text-body1"
+          >
+            예매하기 &gt;
           </button>
         </div>
       </div>
-
-      <p className="text-body2 text-gray-600 mt-10 leading-relaxed">
-        {event.description}
-      </p>
+          <div className="mt-10">
+          <h2 className="text-subtitle1 mb-3">상세 설명</h2>
+          <div className="border rounded-lg p-6">
+          <p className="text-body2 text-gray-600 whitespace-pre-line leading-relaxed">
+          {event.description}
+    </p>
+  </div>
+</div>
+     
     </main>
   );
 }
