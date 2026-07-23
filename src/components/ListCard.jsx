@@ -6,6 +6,7 @@ function ListCard({
   category,
   dDay,
   date,
+  price,
   title,
   onClick,
   className = "",
@@ -47,13 +48,19 @@ function ListCard({
           <SubChip className="bg-[#455DBA] text-white">
             {category}
           </SubChip>
-          <SubChip className="bg-[#455DBA] text-white">
-            {dDay}
-          </SubChip>
+          {dDay && (
+            <SubChip className="bg-[#455DBA] text-white">
+              {dDay}
+            </SubChip>
+          )}
         </div>
 
         <div className="w-full">
-          <p className="mb-0 text-subtitle2 text-[#69788A]">{date}</p>
+          {(date || price) && (
+            <p className="mb-0 text-subtitle2 text-[#69788A]">
+              {date || price}
+            </p>
+          )}
           <h2 className="w-full truncate text-title text-[#171E29]">{title}</h2>
         </div>
       </div>
