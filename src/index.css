@@ -49,6 +49,9 @@
   --text-body3--line-height: 1.5;
   --text-body3--font-weight: 500;
   --text-body3--letter-spacing: -0.28px;
+
+  --radius-100: 100px;
+  --radius-16: 16px;
 }
 
 @layer base {

@@ -3,14 +3,14 @@ import profileIcon from "../assets/icons/profile.svg";
 
 function Header() {
   return (
-    <header className="flex w-full items-center justify-between px-12 py-5 bg-[#F1F1F1] rounded-[100px]">
+    <header className="flex w-full items-center justify-between px-12 py-5 bg-[#F1F1F1] rounded-100">
       <Link to="/" className="flex h-12 items-center text-heading">
         logo
       </Link>
 
       <button
         type="button"
-        className="flex cursor-pointer items-center gap-2 rounded-[100px] border-0 bg-white px-5 py-2"
+        className="flex cursor-pointer items-center gap-2 rounded-100 border-0 bg-white px-5 py-2"
       >
         <img src={profileIcon} alt="" className="size-6" />
         <span className="text-subtitle2">log in</span>
